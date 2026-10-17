@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Flintzy — Social Media Post Scheduler
 
-## Getting Started
+Frontend assignment: compose, schedule, and manage posts for **Facebook**, **Instagram**, **X**, and **TikTok**.
 
-First, run the development server:
+No real social APIs or auth — everything is mocked on the client.
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Live demo
 
-## Learn More
+<!-- Add Vercel/Netlify URL after deploy -->
+_Deploy link coming soon._
 
-To learn more about Next.js, take a look at the following resources:
+## What this app does
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Queue** — posts grouped by day (Today / Tomorrow / date)
+- **Filters + search** — platform, status, content; stored in the **URL** so refresh keeps them
+- **Composer** — content, multi-platform select, optional image URL, datetime
+- **Live character counters** — X 280 · IG/TikTok 2200 · Facebook 5000; blocks submit if over limit
+- **Time** — stored as UTC ISO, shown in local timezone; must be in the future
+- **Retry** — failed posts can be retried (optimistic UI, 1s delay, ~20% fail again)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Stack
 
-## Deploy on Vercel
+- Next.js (App Router) + TypeScript + Tailwind CSS
+- In-memory mock API (`src/lib/api.ts`) seeded with 32 posts (`src/data/posts.ts`)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Folder map
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/
+  app/              # Next.js routes + layout
+  components/       # UI pieces (composer, queue, filters, cards)
+  context/          # PostsProvider — app state
+  data/             # Seed posts
+  hooks/            # usePostFilters (URL sync)
+  lib/              # api, dates, filters, platforms, grouping
+  types/            # Post model
+```
+
+## Technical decisions (short)
+
+1. **Mock API in a module, not MSW** — easier to read and enough for a frontend-only task. Delays + random retry failure live in one file.
+2. **URL query params for filters** — shareable and survives refresh without localStorage.
+3. **Optimistic retry** — UI flips to `scheduled` immediately; on failure it rolls back and shows the error.
+4. **Relative seed dates** — posts are offset from “now”, so Today/Tomorrow always demo correctly.
+
+## Interview notes
+
+See [MODULES.md](./MODULES.md) for a module-by-module breakdown of what was built and why.
+
+## Contact / submission
+
+Assignment contact: bhanu@flintzy.com
