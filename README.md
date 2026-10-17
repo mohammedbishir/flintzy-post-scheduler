@@ -58,7 +58,7 @@ src/
 3. **Optimistic retry** — UI flips to `scheduled` immediately; on failure it rolls back and shows the error.
 4. **Relative seed dates** — posts are offset from “now”, so Today/Tomorrow always demo correctly.
 
-## Interview notes
+## Build notes
 
 See [MODULES.md](./MODULES.md) for a module-by-module breakdown of what was built and why.
 

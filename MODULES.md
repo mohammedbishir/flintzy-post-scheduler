@@ -1,6 +1,6 @@
 # What I built — module by module
 
-Personal notes for the interview. Each module is a small step so I can explain exactly what changed.
+My build notes. Each step is small so I can remember what changed and why.
 
 ---
 
@@ -14,8 +14,8 @@ Personal notes for the interview. Each module is a small step so I can explain e
 - Common production stack, easy Vercel deploy.
 - `useSearchParams` supports URL filters (assignment requirement).
 
-**Say in interview**
-> I used create-next-app so setup time went into domain logic, not bundler config.
+**Why this first**
+- Used create-next-app so setup time went into domain logic, not bundler config.
 
 ---
 
@@ -185,7 +185,7 @@ Personal notes for the interview. Each module is a small step so I can explain e
 
 ---
 
-## Quick demo script (for interview)
+## Quick demo checklist
 
 1. Open app → see Today / Tomorrow groups.
 2. Filter `status=failed` → URL updates → refresh → still filtered.

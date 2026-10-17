@@ -12,7 +12,7 @@ export const DEFAULT_FILTERS: PostFilters = {
   q: "",
 };
 
-/** Pure filter — easy to unit test / explain in interview */
+/** Pure filter — easy to unit test */
 export function filterPosts(posts: Post[], filters: PostFilters): Post[] {
   const query = filters.q.trim().toLowerCase();
 
