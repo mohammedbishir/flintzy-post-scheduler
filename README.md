@@ -35,7 +35,7 @@ _Deploy link coming soon._
 ## Stack
 
 - Next.js (App Router) + TypeScript + Tailwind CSS
-- In-memory mock API (`src/lib/api.ts`) seeded with 32 posts (`src/data/posts.ts`)
+- Mock data: local JSON (`src/data/posts.json`, 32 posts) + **MSW** intercepting `/api/posts`
 
 ## Folder map
 
@@ -44,15 +44,16 @@ src/
   app/              # Next.js routes + layout
   components/       # UI pieces (composer, queue, filters, cards)
   context/          # PostsProvider — app state
-  data/             # Seed posts
+  data/posts.json   # Local mock data (32 posts)
+  mocks/            # MSW handlers + browser worker
   hooks/            # usePostFilters (URL sync)
-  lib/              # api, dates, filters, platforms, grouping
+  lib/              # api (fetch), dates, filters, platforms, grouping
   types/            # Post model
 ```
 
 ## Technical decisions (short)
 
-1. **Mock API in a module, not MSW** — easier to read and enough for a frontend-only task. Delays + random retry failure live in one file.
+1. **Local JSON + MSW** — matches the assignment brief. `posts.json` is the source of truth; MSW handlers fake GET/POST/retry with delays and a 20% retry failure rate.
 2. **URL query params for filters** — shareable and survives refresh without localStorage.
 3. **Optimistic retry** — UI flips to `scheduled` immediately; on failure it rolls back and shows the error.
 4. **Relative seed dates** — posts are offset from “now”, so Today/Tomorrow always demo correctly.

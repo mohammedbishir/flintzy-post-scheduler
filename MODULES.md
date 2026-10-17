@@ -31,15 +31,13 @@ Personal notes for the interview. Each module is a small step so I can explain e
 
 ---
 
-## M03 — Mock seed data
+## M03 — Mock seed data (local JSON)
 
-**File:** `src/data/posts.ts` (32 posts via `getSeedPosts()`)
+**File:** `src/data/posts.json` (32 posts)
 
 **Why**
-- Frontend-only → no backend.
-- Dates are relative to “now” so Today/Tomorrow keep working.
-- Includes scheduled / published / failed (with `errorMessage`).
-- Built **lazily** (not at import time) because Next.js 16 blocks `new Date()` during prerender.
+- Assignment asks for a local JSON file, json-server, or MSW.
+- Schema matches the PDF: id, content, platforms, mediaUrl, scheduledAt (UTC), status, errorMessage.
 
 ---
 
@@ -56,17 +54,18 @@ Personal notes for the interview. Each module is a small step so I can explain e
 
 ---
 
-## M05 — Mock API
+## M05 — MSW mock API
 
-**File:** `src/lib/api.ts`
+**Files**
+- `src/mocks/handlers.ts` — GET/POST `/api/posts`, POST `/api/posts/:id/retry`
+- `src/mocks/browser.ts` — browser worker
+- `src/components/MswProvider.tsx` — starts MSW before loading data
+- `src/lib/api.ts` — real `fetch` calls (intercepted by MSW)
 
 **What**
-- In-memory array cloned from seed.
-- `fetchPosts` (~400ms), `createPost` (~500ms).
-- `retryPost`: **1s delay**, **20% failure**, throws on fail.
-
-**Why not MSW**
-- Same behavior, less ceremony. Swap later if a real API appears.
+- Seeded from `posts.json`.
+- List delay ~400ms, create ~500ms.
+- Retry: **1s delay**, **20% failure**, error body on fail.
 
 ---
 
