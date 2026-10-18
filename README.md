@@ -20,8 +20,7 @@ npm start
 
 ## Live demo
 
-<!-- Add Vercel/Netlify URL after deploy -->
-_Deploy link coming soon._
+https://flintzy-post-scheduler.vercel.app/
 
 ## What this app does
 
